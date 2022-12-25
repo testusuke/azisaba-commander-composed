@@ -1,0 +1,6 @@
+[submodule "azisaba-commander-panel"]
+	path = azisaba-commander-panel
+	url = https://github.com/testusuke/azisaba-commander-panel.git
+[submodule "azisaba-commander-api"]
+	path = azisaba-commander-api
+	url = https://github.com/testusuke/azisaba-commander-api.git
