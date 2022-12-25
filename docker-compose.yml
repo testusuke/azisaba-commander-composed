@@ -1,0 +1,40 @@
+version: '3'
+services:
+  backend:
+    image: node:latest
+    restart: always
+    volumes:
+      - ./azisaba-commander-api:/app
+      - ./config/api/.env:/app/.env
+      - ./config/api/config.json:/app/config.json
+    working_dir: /app
+    ports:
+      - "8080:8080"
+    depends_on:
+      - "mysql"
+    command: bash -c 'yarn && yarn start'
+  frontend:
+    image: node:18.12.0
+    restart: always
+    volumes:
+      - ./azisaba-commander-panel:/app
+      - ./config/panel/.env:/app/.env
+    working_dir: /app
+    ports:
+      - "3000:3000"
+    command: bash -c 'yarn && yarn build && yarn start'
+  mysql:
+    image: mysql:5.7
+    environment:
+    - MYSQL_ROOT_PASSWORD=root
+    - MYSQL_DATABASE=my_database
+    - MYSQL_USER=docker
+    - MYSQL_PASSWORD=docker
+    - TZ='Asia/Tokyo'
+    command: mysqld --character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci
+    volumes:
+    - ./save/mysql/data:/var/lib/mysql
+    ports:
+    - 3306:3306
+    restart: always
+  

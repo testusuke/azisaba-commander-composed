@@ -11,7 +11,7 @@ git clone https://github.com/testusuke/azisaba-commander-composed.git --recursiv
 ```
 
 
-2. move api directory, configure setting files.
+2. move ``config/api`` directory, configure setting files.
 
 ``.env``
 ```
@@ -49,11 +49,11 @@ CONFIG_PATH=./config.json
 ```
 
 
-3. move frontend directory.
+3. move ``config/panel`` directory.
 
 Fill ``RANDOM_STRING`` with command ``openssl rand -base64 32``
 
-``.env.local``
+``.env``
 ```
 NEXT_PUBLIC_API_BASE_URL=http://{IP_ADDRESS}/
 SECRET={RANDOM_STRING}

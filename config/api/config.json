@@ -1,0 +1,9 @@
+{
+  "docker": [
+    {
+      "name": "docker-1",
+      "protocol": "unix",
+      "socket": "/var/run/docker.sock"
+    }
+  ]
+}
