@@ -13,7 +13,7 @@ services:
     - type: bind
       source: ./config/api/config.json
       target: /app/config.json
-    - type: volume
+    - type: bind
       source: /var/run/docker.sock
       target: /var/run/docker.sock
     working_dir: /app
@@ -49,9 +49,10 @@ services:
     command: mysqld --character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci
     volumes:
     - type: volume
-      source: ./save/mysql/data
+      source: mysql_save
       target: /var/lib/mysql
     ports:
     - 3306:3306
     restart: always
-  
+volumes:
+  mysql_save:
