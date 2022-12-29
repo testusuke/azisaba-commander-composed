@@ -4,26 +4,40 @@ services:
     image: node:latest
     restart: always
     volumes:
-      - ./azisaba-commander-api:/app
-      - ./config/api/.env:/app/.env
-      - ./config/api/config.json:/app/config.json
-      - /var/run/docker.sock:/var/run/docker.sock
+    - type: bind
+      source: ./azisaba-commander-api
+      target: /app
+    - type: bind
+      source: ./config/api/.env
+      target: /app/.env
+    - type: bind
+      source: ./config/api/config.json
+      target: /app/config.json
+    - type: volume
+      source: /var/run/docker.sock
+      target: /var/run/docker.sock
     working_dir: /app
     ports:
       - "8080:8080"
     depends_on:
       - "mysql"
     command: bash -c 'yarn && yarn start'
+
   frontend:
     image: node:18.12.0
     restart: always
     volumes:
-      - ./azisaba-commander-panel:/app
-      - ./config/panel/.env:/app/.env
+    - type: bind
+      source: ./azisaba-commander-panel
+      target: /app
+    - type: bind
+      source: ./config/panel/.env
+      target: /app/.env
     working_dir: /app
     ports:
       - "3000:3000"
     command: bash -c 'yarn && yarn build && yarn start'
+
   mysql:
     image: mysql:5.7
     environment:
@@ -34,7 +48,9 @@ services:
     - TZ='Asia/Tokyo'
     command: mysqld --character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci
     volumes:
-    - ./save/mysql/data:/var/lib/mysql
+    - type: volume
+      source: ./save/mysql/data
+      target: /var/lib/mysql
     ports:
     - 3306:3306
     restart: always
